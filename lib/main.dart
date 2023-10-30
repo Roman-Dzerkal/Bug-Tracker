@@ -1,6 +1,26 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      authDomain: 'mindsync-e4d57.firebaseapp.com',
+      appId: '1:617990671841:web:16e055d040dea24f6456a0',
+      messagingSenderId: '617990671841',
+      projectId: 'mindsync-e4d57',
+      storageBucket: 'mindsync-e4d57.appspot.com',
+      apiKey: 'AIzaSyAq_2dyY0Hz2az7-Io25NXuAfnYahN6ma0'
+    ),
+  );
+
+  FirebaseStorage.instance.ref('test').putFile(File('C:\\Users\\Roman\\IdeaProjects\\bug_traker\\pubspec.yaml'));
+  // FirebaseFirestore.instance.collection('users').doc('test').set({'name': 'test'});
   runApp(const MyApp());
 }
 
@@ -30,10 +50,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  Future<void> _incrementCounter() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(email: 'dzerkal.r@gmail.com', password: 'password');
   }
 
   @override
